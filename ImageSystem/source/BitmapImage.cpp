@@ -1,4 +1,4 @@
-#include "ImageSystem/precompiled.hpp"
+#include "precompiled.hpp"
 #include "ImageSystem/BitmapImage.hpp"
 
 namespace ImageSystem
