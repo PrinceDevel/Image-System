@@ -8,7 +8,7 @@ project "ImageSystem"
 	targetdir   (out_dir .. "/%{prj.name}")
 	objdir      (int_dir .. "/%{prj.name}")
 
-	pchheader "include/ImageSystem/precompiled.hpp"
+	pchheader "precompiled.hpp"
 	pchsource "source/precompiled.cpp"
 
 	files {
@@ -16,11 +16,13 @@ project "ImageSystem"
 		"include/ImageSystem/**.hpp",
         
         "source/**.c",
-		"source/**.cpp"
+		"source/**.cpp",
+		"source/precompiled.hpp"
 	}
 
 	includedirs {
-		"include"
+		"include",
+		"source"
 	}
 
 	filter "configurations:Debug"
