@@ -3,16 +3,18 @@
 
 int main()
 {
-    const static ImageSystem::Pixel BLACK           (0, 0, 0);
-    const static ImageSystem::Pixel WHITE           (255, 255, 255);
-    const static ImageSystem::Pixel RED             (255, 0, 0);
-    const static ImageSystem::Pixel BLUE_GREEN      (0, 255, 89);
-    const static ImageSystem::Pixel BACKGROUND      (190, 190, 190);
-    const static ImageSystem::Pixel SKIN            (234, 192, 154);
-    const static ImageSystem::Pixel SHADOW          (211, 161, 118);
+    const static ImageSystem::Color32 BLACK           (0, 0, 0);
+    const static ImageSystem::Color32 WHITE           (255, 255, 255);
+    const static ImageSystem::Color32 RED             (255, 0, 0);
+    const static ImageSystem::Color32 BLUE_GREEN      (0, 255, 89);
+    const static ImageSystem::Color32 BACKGROUND      (190, 190, 190);
+    const static ImageSystem::Color32 SKIN            (234, 192, 154);
+    const static ImageSystem::Color32 SHADOW          (211, 161, 118);
+    const char* path1 = "resource/SantaPixel8x8.bmp";
+    const char* path2 = "resource/SantaClause.bmp";
 
     // Creating an image
-    ImageSystem::BitmapImage image (8, 8);
+    ImageSystem::BitmapImage<ImageSystem::Color32> image (8, 8);
 
     image.SetPixel(0, 0, BLACK);
     image.SetPixel(1, 0, BLACK);
@@ -85,7 +87,12 @@ int main()
     image.SetPixel(5, 7, RED);
     image.SetPixel(6, 7, BACKGROUND);
     image.SetPixel(7, 7, BACKGROUND);
+    
+    image.Save(path1);
 
-    image.Write("resource/SantaPixel8x8.bmp");
+    std::unique_ptr<ImageSystem::BitmapImage<ImageSystem::Color32>> img;
+    img.reset(ImageSystem::BitmapImage<ImageSystem::Color32>::Load(path1));
+    img->Save(path2);
+
     return 0;
 }

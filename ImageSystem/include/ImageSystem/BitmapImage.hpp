@@ -1,60 +1,47 @@
 #include <iostream>
 #include <vector>
+#include "ImageSystem/Colors.hpp"
 
 namespace ImageSystem
 {
-
-    class Pixel
-    {
-    public:
-        unsigned char r = 10;
-        unsigned char g = 10;
-        unsigned char b = 10;
-
-        Pixel() = default;
-        Pixel(unsigned char _r, unsigned char _g, unsigned char _b) : r(_r), g(_g), b(_b) {};
-    };
-
+    template <typename ColorType>
     class BitmapImage
     {
-        unsigned int m_Width, m_Height, m_Count;
+        bool        m_Transculent;      // Tells whether image has alpha channel
+        uint16_t    m_Width;            // width of image in pixels
+        uint16_t    m_Height;           // height of image in pixels
+        uint32_t    m_Count;            // no. of pixels
+        std::vector<ColorType> m_Pixels;    // array to store pixels
 
     public:
-        std::vector<Pixel> m_PixelData;
-        BitmapImage() = default;
-        BitmapImage (unsigned int a_Width, unsigned int a_Height) : m_Width(a_Width), m_Height(a_Height)
-        {
-            this->m_Count = a_Width * a_Height; 
-            this->m_PixelData = std::vector<Pixel> (m_Count);
-        }
-        
-        void SetPixel(unsigned int x, unsigned int y, Pixel pixel)
+        BitmapImage (uint32_t, uint32_t, bool = false);
+
+        void Save (const char* a_Filepath);
+        static BitmapImage* Load (const char* a_Filepath);
+
+        inline bool     IsTransculent() { return m_Transculent; }
+        inline uint16_t GetWidth()  { return m_Width; }
+        inline uint16_t GetHeight() { return m_Height; }
+        inline uint32_t GetCount()  { return m_Count; }
+
+        void SetPixel(uint16_t x, uint16_t y, ColorType pixel)
         {
             if (x < m_Width && y < m_Height)
-                m_PixelData[y * m_Width + x] = pixel;
+                m_Pixels[y * m_Width + x] = pixel;
         }
-        void SetPixel(unsigned int index, Pixel pixel)
+        void SetPixel(uint32_t index, ColorType pixel)
         {
             if (index < m_Count)
-                m_PixelData[index] = pixel;
+                m_Pixels[index] = pixel;
         }
 
-        Pixel GetPixel(unsigned int x, unsigned int y)
+        ColorType GetPixel(uint16_t x, uint16_t y)
         {
-            return (x < m_Width && y < m_Height) ? m_PixelData[x * m_Width + y] : Pixel();
+            return (x < m_Width && y < m_Height) ? m_Pixels[x * m_Width + y] : ColorType(0);
         }
-        Pixel GetPixel(unsigned int index)
+        ColorType GetPixel(uint32_t index)
         {
-            return index < m_Count ? m_PixelData[index] : Pixel();
+            return index < m_Count ? m_Pixels[index] : ColorType(0);
         }
-        
-        inline unsigned int GetWidth() { return m_Width; }
-        inline unsigned int GetHeight() { return m_Height; }
-        inline unsigned int GetCount() { return m_Count; }
-
-
-        void Write (const char* a_Filepath);
-        static BitmapImage* Read(const char* a_Filepath);
     };
-
 }
