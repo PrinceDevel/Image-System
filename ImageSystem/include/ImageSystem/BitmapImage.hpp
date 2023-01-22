@@ -44,4 +44,7 @@ namespace ImageSystem
             return index < m_Count ? m_Pixels[index] : ColorType(0);
         }
     };
+
+    typedef BitmapImage<Color32> BMP32;
+    typedef BitmapImage<Color32> BMP64;
 }

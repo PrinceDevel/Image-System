@@ -3,6 +3,8 @@
 
 int main()
 {
+    // ############ TEST 1 ###############################################
+    /* 
     const static ImageSystem::Color32 BLACK           (0, 0, 0);
     const static ImageSystem::Color32 WHITE           (255, 255, 255);
     const static ImageSystem::Color32 RED             (255, 0, 0);
@@ -93,6 +95,14 @@ int main()
     std::unique_ptr<ImageSystem::BitmapImage<ImageSystem::Color32>> img;
     img.reset(ImageSystem::BitmapImage<ImageSystem::Color32>::Load(path1));
     img->Save(path2);
+
+    return 0;
+    */
+
+    std::unique_ptr<ImageSystem::BMP32> image (ImageSystem::BMP32::Load("resource/neon_4k.bmp"));
+    std::cout << "Transculent: " << image->IsTransculent() << std::endl;
+    image->Save("resource/itworks.bmp");
+
 
     return 0;
 }
